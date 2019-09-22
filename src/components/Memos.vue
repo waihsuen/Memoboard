@@ -1,9 +1,24 @@
 <template>
-  <div>
-    <SortMemo />
-    <CreateMemo v-on:add-memo="newMemoHandler" />
-    <div class="memoContainer" v-bind:key="memo.id" v-for="memo in allMemos">
-      <Item v-bind:memo="memo" />
+  <!-- <CreateMemo v-on:add-memo="newMemoHandler" /> -->
+
+  <div class="mainContainer">
+    <div class="actionContainer">
+      <button class="button" @click="createNewMemo()">Create New Memo</button>
+      <SortMemo />
+    </div>
+
+    <div class="memoContainer">
+      <div class="memoCards" v-bind:key="memo.id" v-for="memo in allMemos" v-focus>
+        <Item v-on:notification="notificationHandler" v-bind:memo="memo" />
+      </div>
+    </div>
+
+    <div class="text-center ma-2">
+      <!-- <v-btn dark @click="snackbar = true">Open Snackbar</v-btn> -->
+      <v-snackbar v-model="snackbar" :timeout="timeout">
+        {{ text }}
+        <v-btn color="pink" text @click="snackbar = false">Close</v-btn>
+      </v-snackbar>
     </div>
   </div>
 </template>
@@ -14,6 +29,8 @@ import Item from "../components/Item";
 import CreateMemo from "../components/CreateMemo";
 import SortMemo from "../components/SortMemo";
 
+let startFocus = false;
+
 export default {
   name: "Memos",
   components: {
@@ -21,22 +38,101 @@ export default {
     CreateMemo,
     SortMemo
   },
+  directives: {
+    focus: {
+      // directive definition
+      inserted: function(el) {
+        if (startFocus) {
+          el.querySelector("input").focus();
+        }
+      }
+    }
+  },
   props: [],
+  data() {
+    return {
+      snackbar: false,
+      timeout: 1200,
+      text: "Memo Saved"
+    };
+  },
   methods: {
     ...mapActions(["fetchMemos", "addMemo"]),
     newMemoHandler(memoData) {
       this.addMemo(memoData);
+    },
+    createNewMemo() {
+      const newMemo = {
+        title: "",
+        body: ""
+      };
+      this.addMemo(newMemo);
+    },
+    addedMemoHandler(memoData) {
+      console.log("memoID", memoID);
+    },
+    notificationHandler(status) {
+      if (startFocus) {
+        console.log("notification", status);
+      }
     }
   },
-  computed: mapGetters(["allMemos"]),
+  computed: {
+    ...mapGetters(["allMemos"]),
+    ...mapGetters(["saveState"])
+  },
   created() {
     this.fetchMemos();
+  },
+  watch: {
+    allMemos: function() {
+      if (startFocus) {
+        console.log("allMemos state update");
+        //this.snackbar = true;
+      }
+    },
+    saveState: function() {
+      this.snackbar = true;
+    }
+  },
+  mounted: function() {
+    this.$nextTick(function() {
+      // Code that will run only after the
+      // entire view has been rendered
+      startFocus = true;
+    });
   }
 };
 </script>
 
 <style scoped>
+.mainContainer {
+  margin: 0 auto;
+  max-width: 900px;
+}
 .memoContainer {
-  float: left;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.actionContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+.memoCards {
+}
+
+.button {
+  background-color: #443ca9;
+  border: none;
+  color: white;
+  margin: 10px 0;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 32px;
 }
 </style>

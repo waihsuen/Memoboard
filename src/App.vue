@@ -1,10 +1,10 @@
 <template>
   <v-app>
     <v-app-bar app>
-      <v-toolbar-title class="headline text-uppercase"></v-toolbar-title>
+      <v-toolbar-title class="headline">Memoboard</v-toolbar-title>
       <v-spacer></v-spacer>
       <div id="nav">
-        <router-link to="/">Home</router-link>|
+        <router-link to="/">Home </router-link>|
         <router-link to="/about">About</router-link>
       </div>
     </v-app-bar>
@@ -24,4 +24,3 @@ export default {
   })
 };
 </script>
-

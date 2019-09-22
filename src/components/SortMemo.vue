@@ -1,10 +1,10 @@
 <template>
   <div>
-      Sort Memo By:
-      <select @change="sortMemo($event)">
-          <option value="title">Title</option>
-          <option value="createdate">Create Date</option>
-      </select>
+    Sort Memo By :
+    <select class="custom-select" @change="sortMemo($event)">
+      <option value="title" selected>Title</option>
+      <option value="createdate">Create Date</option>
+    </select>
   </div>
 </template>
 
@@ -12,11 +12,14 @@
 import { mapActions } from "vuex";
 
 export default {
-    name: 'SortMemo',
-    methods: mapActions(['sortMemo'])
-}
+  name: "SortMemo",
+  methods: mapActions(["sortMemo"])
+};
 </script>
 
-<style>
+<style scoped>
+.custom-select {
+  -webkit-appearance: menulist;
+}
 
 </style>

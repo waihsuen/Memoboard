@@ -6,6 +6,15 @@ import vuetify from './plugins/vuetify';
 
 Vue.config.productionTip = false
 
+
+// Vue.directive('focus', {
+//   inserted: function (el) {
+//     Vue.nextTick(function() {
+//       el.focus()
+//     })
+//   }
+// })
+
 new Vue({
   router,
   store,

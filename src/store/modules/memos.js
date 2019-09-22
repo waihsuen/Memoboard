@@ -2,6 +2,9 @@ import axios from 'axios'
 
 
 const state = {
+    saveState: {
+        state: 'done'
+    },
     memos: [{
         id: 0,
         'created_date': '',
@@ -11,7 +14,8 @@ const state = {
 }
 
 const getters = {
-    allMemos: (state) => state.memos
+    allMemos: (state) => state.memos,
+    saveState: (state) => state.saveState,
 }
 
 const actions = {
@@ -19,16 +23,16 @@ const actions = {
         const response = await axios.get('http://localhost:3000/memos');
         commit('setMemos', response.data);
     },
-    async editMemoTitle({ commit }, data) {
+    async editMemo({ commit }, data) {
         const response = await axios.patch(`http://localhost:3000/memos/${data.id}`, {
             memo: data
-        });
+        }).catch(error => console.log(error))
         commit('updateMemoTitle', response.data)
     },
     async addMemo({ commit }, data) {
         const response = await axios.post('http://localhost:3000/memos/', {
             memo: data
-        });
+        })
         commit('createMemo', response.data)
     },
     async deleteMemo({ commit }, data) {
@@ -46,13 +50,22 @@ const actions = {
 }
 
 const mutations = {
-    setMemos: (state, memos) => (state.memos = memos),
-    updateMemoTitle: (state, memo) => {
-        let item = state.memos.find(() => state.memos.id === memo.id);
-        item = memo;
-        return item;
+    setMemos: (state, memos) => {
+        state.memos = memos
+        state.memos.sort((a, b) => (a.title.localeCompare(b.title)))
     },
-    createMemo: (state, memo) => (state.memos.unshift(memo)),
+    updateMemoTitle: (state, editedMemo) => {
+        let item = state.memos.find(memo => memo.id === editedMemo.id);
+        // item = editedMemo;
+        // Object.assign(state.memos, editedMemo);
+        // state.memos = editedMemos;
+        
+        // only update when there's changes
+        state.saveState = {state : 'done'}
+    },
+    createMemo: (state, memo) => {
+        state.memos.unshift(memo);
+    },
     removeMemo: (state, id) => (state.memos = state.memos.filter(memo => memo.id != id)),
 
     sortMemoByTitle: (state) => {

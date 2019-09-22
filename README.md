@@ -44,6 +44,7 @@ npm install
 ### Compiles and hot-reloads for development
 
 **When npm run serve is ran, an Express server on port 3000 is ran as well**
+
 Use this to reset and generate a fresh list of memos
 
 http://localhost:3000/refreshlist

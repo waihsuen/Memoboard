@@ -42,7 +42,7 @@ app.get('/refreshlist', function (req, res) {
     //let date_ob = new Date();
     let ts = Date.now();
 
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 10; i++) {
         const item = {
             id: uuidv4(),
             created_date: ts.toString(),
@@ -71,6 +71,7 @@ app.patch('/memos/:id', function (req, res) {
     localStorage.setItem('data', JSON.stringify(data));
 
     res.status(200).send(JSON.stringify(item));
+    //res.status(200).send(JSON.stringify(data));
 });
 
 app.post('/memos', function (req, res) {
@@ -83,7 +84,8 @@ app.post('/memos', function (req, res) {
     Object.assign(item, req.body.memo)
     data.unshift(item);
     localStorage.setItem('data', JSON.stringify(data));
-    res.status(200).send(JSON.stringify(req.body.memo));
+
+    res.status(200).send(JSON.stringify(item));
 });
 
 app.delete('/memos/:id', function (req, res) {
