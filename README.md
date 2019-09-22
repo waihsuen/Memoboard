@@ -42,15 +42,19 @@ npm install
 ```
 
 ### Compiles and hot-reloads for development
-```
-npm run serve
-```
+
 **When npm run serve is ran, an Express server on port 3000 is ran as well**
 Use this to reset and generate a fresh list of memos
+
 http://localhost:3000/refreshlist
 
 Use this to view the current list of memo
+
 http://localhost:3000/viewList
+
+```
+npm run serve
+```
 
 ### Compiles and minifies for production
 ```
@@ -58,7 +62,7 @@ npm run build
 ```
 
 ### Run your test
-Test is using Vue Test Utils and Jest
+Test is using Vue Test Utils and Jest.
 ```
 npm run test:unit
 ```
