@@ -55,11 +55,10 @@ const mutations = {
         state.memos.sort((a, b) => (a.title.localeCompare(b.title)))
     },
     updateMemoTitle: (state, editedMemo) => {
-        let item = state.memos.find(memo => memo.id === editedMemo.id);
+        // let item = state.memos.find(memo => memo.id === editedMemo.id);
         // item = editedMemo;
         // Object.assign(state.memos, editedMemo);
         // state.memos = editedMemos;
-        
         // only update when there's changes
         state.saveState = {state : 'done'}
     },
