@@ -1,0 +1,82 @@
+import axios from 'axios'
+
+
+const state = {
+    memos: [{
+        id: 0,
+        'created_date': '',
+        'title': '',
+        'body': ''
+    }]
+}
+
+const getters = {
+    allMemos: (state) => state.memos
+}
+
+const actions = {
+    async fetchMemos({ commit }) {
+        const response = await axios.get('http://localhost:3000/memos');
+        commit('setMemos', response.data);
+    },
+    async editMemoTitle({ commit }, data) {
+        const response = await axios.patch(`http://localhost:3000/memos/${data.id}`, {
+            memo: data
+        });
+        commit('updateMemoTitle', response.data)
+    },
+    async addMemo({ commit }, data) {
+        const response = await axios.post('http://localhost:3000/memos/', {
+            memo: data
+        });
+        commit('createMemo', response.data)
+    },
+    async deleteMemo({ commit }, data) {
+        await axios.delete(`http://localhost:3000/memos/${data.id}`);
+        commit('removeMemo', data.id)
+    },
+    async sortMemo({ commit }, e) {
+        const sortType = e.target.options[e.target.options.selectedIndex].value;
+        if (sortType === 'title') {
+            commit('sortMemoByTitle')
+        } else if (sortType === 'createdate') {
+            commit('sortMemoByDate')
+        }
+    }
+}
+
+const mutations = {
+    setMemos: (state, memos) => (state.memos = memos),
+    updateMemoTitle: (state, memo) => {
+        let item = state.memos.find(() => state.memos.id === memo.id);
+        item = memo;
+        return item;
+    },
+    createMemo: (state, memo) => (state.memos.unshift(memo)),
+    removeMemo: (state, id) => (state.memos = state.memos.filter(memo => memo.id != id)),
+
+    sortMemoByTitle: (state) => {
+        state.memos.sort((a, b) => (a.title.localeCompare(b.title)))
+    },
+    sortMemoByDate: (state) => {
+        state.memos.sort((a, b) => {
+            const dateA = parseInt(a.created_date, 10);
+            const dateB = parseInt(b.created_date, 10);
+
+            if (dateA < dateB) {
+                return 1;
+            }
+            if (dateA > dateB) {
+                return -1;
+            }
+            return 0;
+        })
+    }
+}
+
+export default {
+    state,
+    getters,
+    actions,
+    mutations
+}
