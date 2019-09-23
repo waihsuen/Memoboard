@@ -71,10 +71,17 @@ app.get('/memos', cors(corsOptions), function (req, res) {
 
 app.patch('/memos/:id', function (req, res) {
     let item = data.find(memo => memo.id === req.params.id)
-    Object.assign(item, req.body.memo)
-    localStorage.setItem('data', JSON.stringify(data));
 
-    res.status(200).send(JSON.stringify(item));
+    if (item) {
+        // THERE IS AN ITEM FOUND
+        Object.assign(item, req.body.memo)
+        localStorage.setItem('data', JSON.stringify(data));
+        res.status(200).send(JSON.stringify(item));
+    } else {
+        res.status(500);
+        throw new Error('No Item Found for Update for ID:', req.params.id) 
+    }
+    
     //res.status(200).send(JSON.stringify(data));
 });
 

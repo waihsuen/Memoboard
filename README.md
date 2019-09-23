@@ -50,14 +50,15 @@ npm start
 ### Compiles and hot-reloads for development
 
 **When npm run serve is ran, an Express server on port 3000 is ran as well**
+Nodmon is used for express server to keep server alive for development work.
 
-Use this to reset and generate a fresh list of memos
+Use this to reset and generate a fresh list of memos, it will also clear and refresh the storage
 
-http://localhost:3000/refreshlist
+http://localhost:80/refreshlist
 
 Use this to view the current list of memo
 
-http://localhost:3000/viewList
+http://localhost:80/viewList
 
 ```
 npm run serve

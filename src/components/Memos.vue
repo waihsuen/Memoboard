@@ -43,7 +43,7 @@ export default {
       // directive definition
       inserted: function(el) {
         if (startFocus) {
-          el.querySelector("input").focus();
+          el.querySelector('input').focus();
         }
       }
     }
@@ -51,6 +51,7 @@ export default {
   props: [],
   data() {
     return {
+      isAppFullloaded: false,
       snackbar: false,
       timeout: 1200,
       text: "Memo Saved"
@@ -72,7 +73,7 @@ export default {
       console.log("memoID", memoID);
     },
     notificationHandler(status) {
-      if (startFocus) {
+      if (this.isAppFullloaded) {
         console.log("notification", status);
       }
     }
@@ -82,13 +83,14 @@ export default {
     ...mapGetters(["saveState"])
   },
   created() {
+    startFocus = false;
     this.fetchMemos();
   },
   watch: {
     allMemos: function() {
-      if (startFocus) {
+      if (this.isAppFullloaded) {
         console.log("allMemos state update");
-        //this.snackbar = true;
+        // this.snackbar = true;
       }
     },
     saveState: function() {
@@ -99,8 +101,15 @@ export default {
     this.$nextTick(function() {
       // Code that will run only after the
       // entire view has been rendered
-      startFocus = true;
+      this.isAppFullloaded = true;
     });
+  },
+  updated: function() {
+    // Entire view has been updated with data
+    startFocus = true;
+  },
+  beforeDestroy : function() {
+    startFocus = false;
   }
 };
 </script>
