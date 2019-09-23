@@ -135,4 +135,9 @@ export default {
   text-decoration: none;
   border-radius: 32px;
 }
+
+.delay {
+  transition-delay: 1000ms;
+  animation-delay: 1000ms;
+}
 </style>

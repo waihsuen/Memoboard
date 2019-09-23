@@ -1,5 +1,10 @@
 <template>
   <div>
+    <transition
+          name="fade"
+          enter-active-class="animated fadeInUp delay-2s"
+          leave-active-class="animated fadeOutUp delay-2s"
+        >
     <div class="memoItem">
       <div class="inputContainer">
         <input
@@ -36,11 +41,13 @@
         </div>
       </div>
     </div>
+    </transition>
   </div>
 </template>
 
 <script>
 import { mapActions } from "vuex";
+import VAnimateCss from "v-animate-css";
 
 export default {
   name: "Item",
