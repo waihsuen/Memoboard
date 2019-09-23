@@ -1,13 +1,16 @@
-import { shallowMount } from '@vue/test-utils'
+import { shallowMount, createLocalVue } from '@vue/test-utils'
 import Home from '@/views/Home.vue'
-import Memos from '@/components/Memos'
 
 describe('Home.vue', () => {
   let wrapper;
+  const localVue = createLocalVue();
+
   it('renders props.msg when passed', () => {
-    wrapper = shallowMount(Home, { Memos })
+    wrapper = shallowMount(Home, { localVue })
   })
-  it('renders without errors', () => {
+  
+  it('Page renders correctly', () => {
     expect(wrapper.isVueInstance()).toBeTruthy();
   })
+  
 })

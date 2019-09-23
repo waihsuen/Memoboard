@@ -2,10 +2,16 @@
   <!-- <CreateMemo v-on:add-memo="newMemoHandler" /> -->
 
   <div class="mainContainer">
-    <div class="actionContainer">
-      <button class="button" @click="createNewMemo()">Create New Memo</button>
-      <SortMemo />
-    </div>
+    <v-container>
+      <v-row no-gutters>
+        <v-col cols="12" sm="6" class="buttonAlign">
+          <button class="button" @click="createNewMemo()">Create New Memo</button>
+        </v-col>
+        <v-col cols="12" sm="6" class="sorterAlign">
+          <SortMemo />
+        </v-col>
+      </v-row>
+    </v-container>
 
     <div class="memoContainer">
       <div class="memoCards" v-bind:key="memo.id" v-for="memo in allMemos" v-focus>
@@ -26,7 +32,7 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import Item from "../components/Item";
-import CreateMemo from "../components/CreateMemo";
+// import CreateMemo from "../components/CreateMemo";
 import SortMemo from "../components/SortMemo";
 
 let startFocus = false;
@@ -35,7 +41,7 @@ export default {
   name: "Memos",
   components: {
     Item,
-    CreateMemo,
+    // CreateMemo,
     SortMemo
   },
   directives: {
@@ -43,7 +49,7 @@ export default {
       // directive definition
       inserted: function(el) {
         if (startFocus) {
-          el.querySelector('input').focus();
+          el.querySelector("input").focus();
         }
       }
     }
@@ -69,9 +75,9 @@ export default {
       };
       this.addMemo(newMemo);
     },
-    addedMemoHandler(memoData) {
-      console.log("memoID", memoID);
-    },
+    // addedMemoHandler(memoData) {
+    //   console.log("memoID", memoID);
+    // },
     notificationHandler(status) {
       if (this.isAppFullloaded) {
         console.log("notification", status);
@@ -108,7 +114,7 @@ export default {
     // Entire view has been updated with data
     startFocus = true;
   },
-  beforeDestroy : function() {
+  beforeDestroy: function() {
     startFocus = false;
   }
 };
@@ -131,8 +137,6 @@ export default {
   justify-content: space-between;
   margin: 20px 0;
 }
-.memoCards {
-}
 
 .button {
   background-color: #443ca9;
@@ -145,8 +149,28 @@ export default {
   border-radius: 32px;
 }
 
+.sorterAlign {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
 .delay {
   transition-delay: 1000ms;
   animation-delay: 1000ms;
+}
+
+@media only screen and (max-width: 600px) {
+  .sorterAlign {
+    justify-content: flex-start;
+    margin-top: 20px;
+  }
+  .buttonAlign {
+    text-align: center;
+  }
+  .memoContainer {
+    display: block;
+    margin: 0px 20px 0px 0px;
+  }
 }
 </style>

@@ -1,4 +1,4 @@
-import { shallowMount } from '@vue/test-utils'
+import { mount, shallowMount } from '@vue/test-utils'
 import TrashedMemoHolder from "@/components/TrashedMemosHolder";
 
 describe('TrashedMemoHolder.vue', () => {
@@ -9,6 +9,13 @@ describe('TrashedMemoHolder.vue', () => {
     })
 
     expect(wrapper.text()).toMatch(msg)
+  })
+
+  test('Page renders correctly', () => {
+    const wrapper = mount(TrashedMemoHolder)
+    expect(wrapper.isVueInstance()).toBeTruthy();
+    // NO NEED TO TAKE ANY SNAPSHOT AS THE PAGE ISN'T GOING TO BE STYLED
+    //expect(wrapper.element).toMatchSnapshot()
   })
   
 })

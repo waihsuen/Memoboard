@@ -1,53 +1,53 @@
 <template>
   <div>
     <transition
-          name="fade"
-          enter-active-class="animated fadeInUp delay-2s"
-          leave-active-class="animated fadeOutUp delay-2s"
-        >
-    <div class="memoItem">
-      <div class="inputContainer">
-        <input
-          @blur="titleOnBlurHandler(memo.id, memo.title, memo.body)"
-          v-model="memo.title"
-          type="text"
-          name="title"
-          size="15"
-          maxlength="15"
-          placeholder="Title goes here"
-        />
-      </div>
-      <div class="textareaContainer">
-        <textarea
-          @blur="bodyOnBlurHandler(memo.id, memo.title, memo.body)"
-          v-on:keyup="bodyChangeHandler()"
-          v-model="memo.body"
-          type="text"
-          name="body"
-          size="140"
-          maxlength="140"
-          rows="4"
-          placeholder="Please input your idea/memo here"
-        />
-      </div>
+      name="fade"
+      enter-active-class="animated fadeInUp delay-2s"
+      leave-active-class="animated fadeOutUp delay-2s"
+    >
+      <div class="memoItem">
+        <div class="inputContainer">
+          <input
+            @blur="titleOnBlurHandler(memo.id, memo.title, memo.body)"
+            v-model="memo.title"
+            type="text"
+            name="title"
+            size="15"
+            maxlength="15"
+            placeholder="Title goes here"
+          />
+        </div>
+        <div class="textareaContainer">
+          <textarea
+            @blur="bodyOnBlurHandler(memo.id, memo.title, memo.body)"
+            v-on:keyup="bodyChangeHandler()"
+            v-model="memo.body"
+            type="text"
+            name="body"
+            size="140"
+            maxlength="140"
+            rows="4"
+            placeholder="Please input your idea/memo here"
+          />
+        </div>
 
-      <div class="cardFooter">
-        <div class="cardFooterContainer">
-          <div
-            class="charLeft"
-            v-bind:class="{'is-showCharLeft':(this.messageLengthLeft <= 15)}"
-          >{{ messageLengthLeft }} left</div>
-          <i @click="trashClickedHandler(memo.id)" class="trash fas fa-trash"></i>
+        <div class="cardFooter">
+          <div class="cardFooterContainer">
+            <div
+              class="charLeft"
+              v-bind:class="{'is-showCharLeft':(this.messageLengthLeft <= 15)}"
+            >{{ messageLengthLeft }} left</div>
+            <i @click="trashClickedHandler(memo.id)" class="trash fas fa-trash"></i>
+          </div>
         </div>
       </div>
-    </div>
     </transition>
   </div>
 </template>
 
 <script>
 import { mapActions } from "vuex";
-import VAnimateCss from "v-animate-css";
+// import VAnimateCss from "v-animate-css";
 
 export default {
   name: "Item",
@@ -91,7 +91,7 @@ export default {
     messageLengthLeft: function() {
       return 140 - this.messageLength;
     }
-  },
+  }
   // updated: function() {
   //   console.log('BBB');
   //   this.$nextTick(function() {
@@ -164,5 +164,10 @@ input:focus {
   justify-content: space-between;
   align-items: center;
   padding: 6px;
+}
+@media only screen and (max-width: 600px) {
+  .memoItem {
+    width: 100%;
+  }
 }
 </style>

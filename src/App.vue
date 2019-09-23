@@ -19,8 +19,6 @@
 </template>
 
 <script>
-import VAnimateCss from "v-animate-css";
-
 export default {
   name: "App",
   components: {},

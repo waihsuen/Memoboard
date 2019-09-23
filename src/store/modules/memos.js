@@ -60,6 +60,7 @@ const mutations = {
         // Object.assign(state.memos, editedMemo);
         // state.memos = editedMemos;
         // only update when there's changes
+        console.log(editedMemo);
         state.saveState = {state : 'done'}
     },
     createMemo: (state, memo) => {
