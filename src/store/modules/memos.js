@@ -20,23 +20,23 @@ const getters = {
 
 const actions = {
     async fetchMemos({ commit }) {
-        const response = await axios.get('http://localhost:3000/memos');
+        const response = await axios.get('http://localhost:80/memos');
         commit('setMemos', response.data);
     },
     async editMemo({ commit }, data) {
-        const response = await axios.patch(`http://localhost:3000/memos/${data.id}`, {
+        const response = await axios.patch(`http://localhost:80/memos/${data.id}`, {
             memo: data
         }).catch(error => console.log(error))
         commit('updateMemoTitle', response.data)
     },
     async addMemo({ commit }, data) {
-        const response = await axios.post('http://localhost:3000/memos/', {
+        const response = await axios.post('http://localhost:80/memos/', {
             memo: data
         })
         commit('createMemo', response.data)
     },
     async deleteMemo({ commit }, data) {
-        await axios.delete(`http://localhost:3000/memos/${data.id}`);
+        await axios.delete(`http://localhost:80/memos/${data.id}`);
         commit('removeMemo', data.id)
     },
     async sortMemo({ commit }, e) {

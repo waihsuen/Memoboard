@@ -3,41 +3,47 @@
 const express = require('express');
 var bodyParser = require('body-parser');
 const app = express();
-const port = process.env.PORT || 3000;
-// var path = require('path');
+const port = process.env.PORT || 80;
+var path = require('path');
 var cors = require('cors');
 const uuidv4 = require('uuid/v4');
 const LocalStorage = require('node-localstorage').LocalStorage;
 
 var localStorage = new LocalStorage('./scratch');
-// var corsOptions = {
-//     origin: '*',
-//     optionsSuccessStatus: 200,
-// }
+
 
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+
 
 let data = [];
 if (localStorage.getItem('data')) {
     data = JSON.parse(localStorage.getItem('data'));
 }
 
-// Serve the files on port 3000.
+// Serve the files on port
 const server = app.listen(port, function () {
     console.log(`We started a server at port ${server.address().port} \n`);
 });
 
-app.get('/', function (req, res) {
-    res.status(200).send('API');
+var corsOptions = {
+    origin: '*',
+    optionsSuccessStatus: 200,
+}
+app.use(express.static(path.join(__dirname, 'dist')));
+
+app.get('/', cors(corsOptions), function (req, res) {
+    res.sendFile(__dirname + '/dist/index.html');
 });
 
-app.get('/viewlist', function (req, res) {
+
+app.get('/viewlist', cors(corsOptions), function (req, res) {
     res.status(200).send(JSON.stringify(data));
 });
 
-app.get('/refreshlist', function (req, res) {
+app.get('/refreshlist', cors(corsOptions), function (req, res) {
     data = [];
     //let date_ob = new Date();
     let ts = Date.now();
@@ -58,10 +64,8 @@ app.get('/refreshlist', function (req, res) {
     res.status(200).send(JSON.stringify(data));
 });
 
-
 // CRUD
-
-app.get('/memos', function (req, res) {
+app.get('/memos', cors(corsOptions), function (req, res) {
     res.status(200).send(JSON.stringify(data));
 });
 

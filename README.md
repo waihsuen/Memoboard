@@ -8,8 +8,7 @@ Each idea should have a unique id (read-only), a creation date (read-only), a ti
 
 ```
 Assume that there is a backend REST service with the following endpoints:
-• GET idea/:id -> [{“id”: “:id”, “created_date”: “:created_date”, “title”: “:title”, “body”: “:body”},
-• {},...]
+• GET idea/:id -> [{“id”: “:id”, “created_date”: “:created_date”, “title”: “:title”, “body”: “:body”}, {},...]
 • POST ideas -> { “id”: “:id”, “created_date”: “:created_date” }
 • PUT idea/:id { “id”: “:id” }
 • DELETE idea/:id { “id”: “:id” }
@@ -40,6 +39,13 @@ choose?
 ```
 npm install
 ```
+
+## After build, deployment
+```
+npm start
+```
+
+---
 
 ### Compiles and hot-reloads for development
 
